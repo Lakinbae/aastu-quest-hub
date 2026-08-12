@@ -8,8 +8,8 @@ app = Flask(__name__)
 app.secret_key = "aastu_secret_quest_key_change_this"
 
 # Configure Supabase
-SUPABASE_URL = https://njldbryvwtfawzvklhcn.supabase.co"
-SUPABASE_KEY = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5qbGRicnl2d3RmYXd6dmtsaGNuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY0ODk2NjMsImV4cCI6MjEwMjA2NTY2M30.1QOcknzZCRBg-sYc9mbH95zCsB3CfIPFwkqPXJTh-MY"
+SUPABASE_URL = "https://njldbryvwtfawzvklhcn.supabase.co"
+SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5qbGRicnl2d3RmYXd6dmtsaGNuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY0ODk2NjMsImV4cCI6MjEwMjA2NTY2M30.1QOcknzZCRBg-sYc9mbH95zCsB3CfIPFwkqPXJTh-MY"
 
 HEADERS = {
     "apikey": SUPABASE_KEY,

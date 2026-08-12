@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="space-y-6">
+    <!-- Profile Card -->
+    <div class="bg-slate-800 border border-slate-700 p-6 rounded-2xl shadow-xl flex justify-between items-center">
+        <div>
+            <h2 class="text-2xl font-bold text-white">{{ student.name }}</h2>
+            <p class="text-slate-400 text-sm">Section {{ student.section }} • ID: {{ student.student_id }}</p>
+        </div>
+        <div class="text-right">
+            <span class="text-emerald-400 font-extrabold text-xl">{{ student.total_earned }} ETB</span>
+            <p class="text-xs text-slate-400">Total Earned</p>
+        </div>
+    </div>
+
+    <!-- Telebirr Phone Setup -->
+    <div class="bg-slate-800 border border-slate-700 p-6 rounded-2xl shadow-xl">
+        <h3 class="font-bold text-lg mb-2 text-white">📱 Telebirr Payout Account</h3>
+        <form method="POST" class="flex gap-2">
+            <input type="hidden" name="update_phone" value="1">
+            <input type="text" name="phone" value="{{ student.telebirr_phone or '' }}" placeholder="0912345678" required
+                   class="flex-grow bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-emerald-500">
+            <button type="submit" class="bg-slate-700 hover:bg-slate-600 text-white px-4 py-2 rounded-xl font-semibold transition">Save</button>
+        </form>
+    </div>
+
+    <!-- Get Quest Button -->
+    <div class="text-center">
+        <form method="POST">
+            <input type="hidden" name="get_quest" value="1">
+            <button type="submit" class="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-slate-950 font-extrabold py-4 rounded-2xl shadow-lg transition transform hover:-translate-y-0.5">
+                🎯 Get Random Cross-Section Quest (+5 ETB)
+            </button>
+        </form>
+    </div>
+
+    <!-- Active & Past Missions -->
+    <div class="space-y-4">
+        <h3 class="font-bold text-lg text-white">Your Quests</h3>
+        {% for m in missions %}
+        <div class="bg-slate-800 border border-slate-700 p-6 rounded-2xl shadow-xl space-y-3">
+            <div class="flex justify-between items-start">
+                <div>
+                    <span class="text-xs px-2 py-1 rounded-md font-bold 
+                        {% if m.status == 'APPROVED' %} bg-emerald-500/20 text-emerald-400 border border-emerald-500/30
+                        {% elif m.status == 'SUBMITTED' %} bg-amber-500/20 text-amber-400 border border-amber-500/30
+                        {% else %} bg-slate-700 text-slate-300 {% endif %}">
+                        {{ m.status }}
+                    </span>
+                    <p class="text-xs text-slate-400 mt-2">Partner: <strong class="text-white">{{ m.partner.name }}</strong> (Section {{ m.partner.section }})</p>
+                </div>
+                <span class="text-emerald-400 font-bold">+{{ m.reward_amount }} ETB</span>
+            </div>
+
+            <p class="text-slate-200 bg-slate-900 p-4 rounded-xl border border-slate-700/50 italic">"{{ m.mission_text }}"</p>
+
+            {% if m.status == 'PENDING' %}
+            <form method="POST" enctype="multipart/form-data" class="space-y-2 pt-2 border-t border-slate-700">
+                <input type="hidden" name="mission_id" value="{{ m.id }}">
+                <label class="block text-xs text-slate-400 font-medium">Upload photo proof with your partner to claim reward:</label>
+                <input type="file" name="proof_image" accept="image/*" required class="w-full text-sm text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-emerald-500/10 file:text-emerald-400 hover:file:bg-emerald-500/20">
+                <button type="submit" name="upload_proof" value="1" class="w-full bg-slate-700 hover:bg-slate-600 text-white font-semibold py-2 rounded-xl transition">Submit Proof 📸</button>
+            </form>
+            {% elif m.proof_image_url %}
+            <div class="mt-2">
+                <a href="{{ m.proof_image_url }}" target="_blank" class="text-xs text-emerald-400 underline">View Uploaded Proof</a>
+            </div>
+            {% endif %}
+        </div>
+        {% else %}
+        <p class="text-slate-500 text-center py-6">No quests yet. Hit the button above to match with a peer!</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

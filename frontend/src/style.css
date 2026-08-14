@@ -1,0 +1,7 @@
+body { font-family: system-ui, Arial; margin: 0; padding: 0; }
+.app { max-width: 900px; margin: 20px auto; padding: 16px; }
+header { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+nav button { margin-right:8px; }
+input, textarea { width:100%; padding:8px; margin:6px 0 12px; }
+.team { border:1px solid #ddd; padding:8px; margin:8px 0; border-radius:6px; }
+pre { background:#f7f7f7; padding:8px; border-radius:6px; }

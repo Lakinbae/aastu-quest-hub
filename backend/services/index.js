@@ -53,3 +53,15 @@ app.post('/submit', async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
+
+// add near other routes
+app.get('/teams', async (req, res) => {
+  const questId = req.query.questId;
+  if (!questId) return res.status(400).json({ error: 'questId required' });
+  const { data, error } = await supabase
+    .from('teams')
+    .select('id,quest_id,member_student_ids')
+    .eq('quest_id', questId);
+  if (error) return res.status(500).json({ error });
+  res.json({ teams: data });
+});
